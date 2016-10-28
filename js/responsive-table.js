@@ -7,7 +7,7 @@
  * 800 - 1000: 5 columns
  * 1000 +: all columns
  * 
- * Requirements: enquire.js for media queries (+ matchmedia polyfill), jquery.reveal.js for modal
+ * Requirements: matchmedia polyfill if supporting IE < 10 or old webkits, jquery.reveal.js for modal
  */
 
 (function ($) {
@@ -192,16 +192,23 @@
             }
 
             // Update table layout on screen resize
-            enquire.register('screen and (max-width:479px)', {
-                match: breakpoints["3"](sort)
-            })
-            .register('screen and (min-width:480px) and (max-width:799px)', {
-                match: breakpoints["5"](sort)
-            })
-            .register('screen and (min-width:800px) and (max-width:999px)', {
-                match: breakpoints["all"](sort)
-            });
+            $window.on('resize', onResize(sort));
+            
+            onResize(sort);
         });
+        
+        // Handle the window resize event. Chooses which breakpoint function to fire on the table.
+        // 'sort' is an optional param that gets passed in on initial load.
+        // @param sort {string} the name of the currently sorted column
+        function onResize(sort) {
+            if (window.matchMedia('screen and (max-width:479px)').matches) {
+                breakpoints["3"]();
+            } else if (window.matchMedia('screen and (min-width:480px) and (max-width:799px)').matches) {
+                breakpoints["5"]();
+            } else if (window.matchMedia('screen and (min-width:800px) and (max-width:999px)').matches) {
+                breakpoints["all"]();
+            } 
+        }
         
         
         // Store a reference to the function that should be called at each breakpoint
