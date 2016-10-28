@@ -1,0 +1,511 @@
+﻿//@import "modules/all";
+//@import "partials/scaffolding";
+//@import "plugins/selectize";
+//@import "plugins/nouislider";
+//@import "plugins/jquery.typeahead";
+
+
+$break-tablet: 800px;
+$break-desktop: 1000px;
+
+// mobile breakpoints (minimum: two columns)
+$break-threecolumn: 480px;
+$break-fivecolumn: 800px;
+$break-allcolumn: 1000px;
+
+// fixed-width page container
+$fixedPageWidth: 1300px;
+
+// colors
+$highlight: #d8dcdc;
+$accent: #2b929c;
+$borderColor: #d8dcdc;
+$brightBlue: #32e6f7;
+$white: #fff;
+
+
+// ----------------------------------------------
+// Mixins
+// ----------------------------------------------
+
+@mixin center-element($margin:0) {
+    margin: $margin auto;
+}
+
+// display an image inline after an element
+@mixin display-image($src, $width, $height) {
+    background:url($src) no-repeat 0 0;
+    background-size:100%;
+    content:'';
+    display:inline-block;
+    height:$height;
+    width:$width;
+}
+
+
+// responsive width declarations for table columns and related elements
+@mixin responsive-column-widths($offset:false) {
+    width:30%;
+    @if $offset {
+        width:calc(30% - 3px);
+    }
+
+    @media screen and (min-width:$break-threecolumn) {
+        width:20%;
+        @if $offset {
+            width:calc(20% - 3px);
+        }
+    }
+    @media screen and (min-width:$break-fivecolumn) {
+        width:15%;
+        @if $offset {
+            width:calc(15% - 3px);
+        }
+    }
+    @media screen and (min-width:$break-allcolumn) {
+        width:10%;
+    }
+
+    @extend %responsive-column-first-child;
+}
+
+// ----------------------------------------------
+// Placeholders 
+// ----------------------------------------------
+
+%clear-button-appearance {
+    background:none;
+    border:none;
+
+    &:focus {
+        outline:none;
+    }
+}
+
+
+%responsive-column-first-child {
+    &:first-child {
+        width: 70%;
+            
+        @media screen and (min-width:$break-threecolumn) {
+            width: 60%;
+        }
+        @media screen and (min-width:$break-fivecolumn) {
+            width: 40%;
+        }
+        @media screen and (min-width:$break-allcolumn) {
+            width: 30%;
+        }
+    }
+}
+
+
+%unstyled-list {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+// extend the .wrapper element
+%wrapper {
+    margin:0 5%;
+    max-width: $fixedPageWidth;
+    width:90%;
+    
+    @media all and (min-width:1430px) {
+        margin:0 auto;
+        width:$fixedPageWidth;
+    }
+}
+
+
+// convert em to px value
+$base-font-size:16px;
+@function px($emValue,$base:$base-font-size) {
+    @return $emValue*16px;
+}
+
+
+.reveal-modal {
+    box-shadow:none;
+    top: 2em;
+	
+    @media screen and (min-width:$break-fivecolumn) {
+        top:4em;
+    }
+
+    .modal-header {
+        background:none;
+        border-bottom:none;
+        padding:0;
+    }
+
+    .close-reveal-modal {
+		color: $accent;
+        font-size:40px;
+        font-weight:normal;
+        right:10px;
+        top:14px;
+    }
+}
+
+
+.rsp-table-menu,
+.rsp-table-modal {
+    ul {
+        @extend %unstyled-list;
+    }
+
+    li {
+        padding:.5em;
+        
+        &.selected {
+
+			button:before {
+				color: #7f7f7f;
+			}
+        }
+		
+		button {
+			@extend %clear-button-appearance;
+			transition: color 500ms ease-out;
+			
+			&:before {
+				content: '\276f';
+				color: $white;
+				margin-right: .5em;
+				transition: inherit;
+			}
+			
+			&:focus,
+			&:hover	{
+				color: $accent;
+				&:before {
+					color: $brightBlue;
+				}
+			}
+		}
+
+        @media screen and (min-width:$break-threecolumn) {
+            &[data-break="3"] {
+                display:none;
+            }
+        }
+        @media screen and (min-width:$break-fivecolumn) {
+            &[data-break="5"] {
+                display:none;
+            }
+        }
+    }
+}
+
+.lt-ie9 .rsp-table-menu {
+    display:none;
+}
+
+// responsive dropdown option
+.rsp-table-menu {
+
+    @media all and (min-width:$break-allcolumn) {
+        display:none;
+    }
+
+    ul,
+    .toggle {
+        background-color:$white;
+        border:2px solid $borderColor;
+		font-size: 90%;
+        position:absolute;
+        right:0;
+		top: 2.4rem; // 1rem + line-height. TODO...
+    }
+    
+    .toggle {
+		border-bottom-left-radius: 4px;
+		border-bottom-right-radius: 4px;
+        padding:.25em 1.5em;
+    }
+
+    ul {
+		border-radius: 0 0 4px 4px;
+        border-top:none;
+		box-shadow: 0 2px 2px rgba(#ababab, .5);
+		box-sizing: border-box;
+		margin-top: -1px; // overlay th bottom border
+        padding:0;
+		
+		width: 50%;
+		
+		@media screen and (min-width: $break-threecolumn) {
+			width: 30%;
+		}
+		@media screen and (min-width: $break-fivecolumn) {
+			width: 20%;
+		}
+    }
+
+    // .no-touch landscape mode and similarly small viewports
+    @media (max-height:480px) {
+        ul {
+            height:auto;
+            max-width:75%;
+            width:auto;
+
+            li {
+                display:inline-block;
+            }
+        }
+    }
+
+    li {
+		
+		&.selected {
+			display: none;
+		}
+
+        button {
+			display: block;
+			padding: .5em;
+			text-align:left;
+            width:100%;
+        }
+    }
+} // end .rsp-table-menu
+
+.rsp-table-modal {
+    .modal-body {
+        padding:1em;
+    }
+
+    ul {
+        padding-top:1.5em;
+    }
+
+    li {
+        border-bottom:1px solid $highlight;
+
+        &:last-child {
+            border-bottom:none;
+        }
+		
+		&.selected {		
+			background-color: #ddd;
+			border-color: #ccc;
+			border-radius: 2px;	
+		}
+
+        button {
+            @include center-element;
+            display:block;
+            padding: .5em 1em;
+            width:100%;
+
+            @media screen and (min-width:$break-tablet) {
+                min-width:50%;
+                width:auto;
+            }
+			
+			&:before {
+				color: #eee;
+			}
+        }
+    }
+}
+
+// Results table
+.lt-ie10 .rsp-table.sticky th {
+    
+    &:first-child {
+        width:0.7 * $break-threecolumn; //70%;
+            
+        @media screen and (min-width:$break-threecolumn) {
+            width: 0.6 * $break-fivecolumn; //60%;
+        }
+        @media screen and (min-width:$break-fivecolumn) {
+            width: 0.4 * $break-allcolumn; //40%;
+        }
+        @media screen and (min-width:$break-allcolumn) {
+            width: 0.3 * $fixedPageWidth; //30%;
+        }
+    }
+}
+
+.rsp-table {
+    border:none;
+    position:relative;
+    table-layout:fixed;
+    width:100%;
+
+    @media screen and (min-width:$break-allcolumn) {
+        position:static;
+    }
+
+    &.sticky  {
+
+        colgroup {
+            display:table-header-group;
+            width:100%;
+
+            @media screen and (min-width:$break-allcolumn) {
+                display:table-column-group;
+            }
+        }
+
+        thead {
+            @extend %wrapper;
+
+            display:table;
+            margin:0;
+            min-width:320 - px(2);
+            position:fixed;
+            table-layout:fixed;
+            top:0;
+        }
+
+        tr:first-child {
+            td {
+                padding-top:4em; // TODO
+            }
+        }
+    }
+    
+    @media screen and (max-width: $break-allcolumn - 1) {        
+        th { 
+
+            &.rsp-menu-open {
+				//position: relative;
+				
+				&:before {
+					background-color: #eee;
+					border:2px solid $borderColor;
+					border-bottom: none;
+					border-radius:4px 4px 0 0;
+					z-index: -1;
+					content: '';
+					position: absolute;
+					height: 2.4rem;
+					top: 0;
+					right: 0;
+					left: 50%; // corresponds to width: 50% for .rsp-table-menu
+
+					@media screen and (min-width: $break-threecolumn) {
+						left: 70%;
+					}
+					
+					@media screen and (min-width: $break-fivecolumn) {
+						left: 80%;
+					}
+				}
+			
+            }
+        }
+
+        col,
+        td,
+        th { 
+            display: none;
+
+            &:first-child,
+            &.mobile-show {
+                display:table-cell;
+            }
+            
+            @media screen and (min-width:$break-threecolumn) {
+
+                &[data-priority="6"],
+                &.pri-6 { //Distance
+                    display:table-cell;
+                }
+                
+                &[data-priority="5"],
+                &.pri-5 { //Favorites
+                    display:table-cell;
+
+                    @media screen and (max-width:$break-fivecolumn - 1) {
+                        &.mobile-hide {
+                            display:none;
+                        }
+                    }
+                }
+            }
+
+            @media screen and (min-width:$break-fivecolumn) {
+
+                &[data-priority="4"],
+                &.pri-4 { //Found
+                    display:table-cell;
+                }
+                
+                &[data-priority="3"],
+                &.pri-3 { //Size
+                    display:table-cell;
+                    &.mobile-hide {
+                        display:none;
+                    }
+                }
+            }
+
+        }
+
+    } // end screen and (max-width: 999px)
+
+    td,
+    th {
+		padding: .5em;
+        word-wrap:break-word;
+    }
+	
+	tr:first-child td {
+		// Keep rsp-menu button from overflowing cell content
+		padding-top: 2em;
+	}
+
+    th {
+        //background-color:#fff;
+        border-bottom: 2px solid $borderColor;
+        text-align:left;
+
+        + th {
+            text-align:center;
+        }
+
+        &:first-child {
+            span {
+                border-left:none;
+                display:block;
+            }
+        }
+    } // end th
+
+    td {
+		border-bottom: 1px solid $borderColor;
+        text-align:left;
+
+        + td {
+            text-align:center;
+        }
+    }
+	
+} // end .rsp-table
+
+
+// ----------------------------------
+// Print it up!
+// ----------------------------------
+@media print {
+    .rsp-table-menu {
+        display:none;
+    }
+    
+    .rsp-table {
+
+        &.sticky {
+            thead {
+                display:table-header-group;
+                position:static;
+            }
+        }
+
+    } 
+
+}

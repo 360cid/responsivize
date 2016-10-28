@@ -1,0 +1,332 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Responsivize - responsive table plugin</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/responsivize.css">
+
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+    <body>
+
+        <div class="header-container">
+            <header class="wrapper clearfix">
+				<h1>Responsivize &mdash; responsive table plugin</h1>
+            </header>
+        </div>
+
+        <div class="main-container">
+            <div class="main wrapper clearfix">					
+				<p>Responsivize is a table that fits on your screen.</p>
+				<h2>How to Use</h2>
+				<div class="intro">
+					<h3>Initialization:</h3>
+					<p>You call it like this...</p>
+					<code>
+						$('#myTable').responsivize();
+						<br /><br />
+					</code>
+					<h3>Options:</h3>
+					<dl>
+						<dt>highlightSortedColumn</dt>
+						<dd>default: false</dd>
+						<dd>set a background color on the currently sorted column</dd>
+						
+						<dt>modal</dt>
+						<dd>default: true</dd>
+						<dd>display the column selector in a modal or dropdown</dd>
+						
+						<dt>columnPriority</dt>
+						<dd>default: TODO (it's complicated)
+						<dd>Order in which columns should hide. Most of this is handled via css;
+							script is required to handle window resizing and various sort options</dd>
+						
+						<dt></dt>
+						<dd></dd>
+					</dl>
+					
+				</div>
+				
+				<table class="rsp-table" id="table">
+                    <colgroup>
+                    
+                        <col class="mobile-show col-primary"/> 
+                        <col data-priority="6"  /> 
+                        <col data-priority="5" /> 
+                        <col data-priority="4" /> 
+                        <col data-priority="1" /> 
+                        <col data-priority="1" /> 
+                        <col data-priority="3" /> 
+                        <col data-priority="1" /> 
+                    
+                    </colgroup>
+                    <thead>
+                        <tr>
+
+                            <th scope="col" class="sort-column mobile-show">
+								Type
+                            </th>
+                            <th data-priority="6" data-column="Size" scope="col" class="sort-column mobile-show sort-asc">
+								Size
+                            </th>
+                            <th data-priority="5" data-column="Weight" scope="col" class="sort-column">
+								Weight
+                            </th>
+                            <th data-priority="4" data-column="BoatName" scope="col" class="sort-column">
+								Boat Name
+                            </th>
+                            <th data-priority="1" data-column="CrewCount" scope="col" class="sort-column">
+								# of Crew
+                            </th>
+                            <th data-priority="1" data-column="Date" scope="col" class="sort-column">
+								Date
+                            </th>
+							<th data-priority="3" data-column="Coordinates" scope="col" class="sort-column">
+								Coordinates
+							</th>
+                            <th data-priority="1" data-column="CatchClock" scope="col" class="sort-column">
+								Catch Clock
+                            </th>
+							
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+						<tr>
+							<td class=" mobile-show">
+								Bluefin
+							</td>
+							<td class="mobile-show pri-6" data-column="Size">
+								85"
+							</td>
+							<td class="pri-5" data-column="Weight">
+								301 lbs
+							</td>
+							<td class="pri-4" data-column="BoatName">
+								Hard Merchandise
+							</td>
+							<td class="pri-1" data-column="CrewCount">
+								2
+							</td>
+							<td class="pri-1" data-column="Date">
+								6/01/2016
+							</td>
+							<td class="pri-3" data-column="Coordinates">
+								32.125, -122.459                
+							</td>
+							<td class="pri-1" data-column="CatchClock">
+								3:06
+							</td>
+						</tr>
+						<tr>
+							<td class=" mobile-show">
+								Yellowfin
+							</td>
+							<td class="mobile-show pri-6" data-column="Size">
+								36"
+							</td>
+							<td class="pri-5" data-column="Weight">
+								50 lbs
+							</td>
+							<td class="pri-4" data-column="BoatName">
+								FV-tuna.com
+							</td>
+							<td class="pri-1" data-column="CrewCount">
+								2
+							</td>
+							<td class="pri-1" data-column="Date">
+								6/04/2016
+							</td>
+							<td class="pri-3" data-column="Coordinates">
+								33.125, -125.459                
+							</td>
+							<td class="pri-1" data-column="CatchClock">
+								0:21
+							</td>
+						</tr>
+						<tr>
+							<td class=" mobile-show">
+								Bigeye
+							</td>
+							<td class="mobile-show pri-6" data-column="Size">
+								49"
+							</td>
+							<td class="pri-5" data-column="Weight">
+								100 lbs
+							</td>
+							<td class="pri-4" data-column="BoatName">
+								Hot Tuna
+							</td>
+							<td class="pri-1" data-column="CrewCount">
+								4 (+ dog)
+							</td>
+							<td class="pri-1" data-column="Date">
+								6/04/2016
+							</td>
+							<td class="pri-3" data-column="Coordinates">
+								33.125, -125.459                
+							</td>
+							<td class="pri-1" data-column="CatchClock">
+								0:21
+							</td>
+						</tr>
+						<tr>
+							<td class=" mobile-show">
+								Albacore
+							</td>
+							<td class="mobile-show pri-6" data-column="Size">
+								24"
+							</td>
+							<td class="pri-5" data-column="Weight">
+								10 lbs
+							</td>
+							<td class="pri-4" data-column="BoatName">
+								Miss Sambvca
+							</td>
+							<td class="pri-1" data-column="CrewCount">
+								1
+							</td>
+							<td class="pri-1" data-column="Date">
+								6/12/2016
+							</td>
+							<td class="pri-3" data-column="Coordinates">
+								31.255, -120.459                
+							</td>
+							<td class="pri-1" data-column="CatchClock">
+								0:15
+							</td>
+						</tr>
+						<tr>
+							<td class=" mobile-show">
+								Yellowtail
+							</td>
+							<td class="mobile-show pri-6" data-column="Size">
+								50"
+							</td>
+							<td class="pri-5" data-column="Weight">
+								63 lbs
+							</td>
+							<td class="pri-4" data-column="BoatName">
+								Hot Tuna
+							</td>
+							<td class="pri-1" data-column="CrewCount">
+								4 (+ dog)
+							</td>
+							<td class="pri-1" data-column="Date">
+								6/17/2016
+							</td>
+							<td class="pri-3" data-column="Coordinates">
+								48.101, -119.459                
+							</td>
+							<td class="pri-1" data-column="CatchClock">
+								0:06
+							</td>
+						</tr>
+						<tr>
+							<td class=" mobile-show">
+								Skipjack
+							</td>
+							<td class="mobile-show pri-6" data-column="Size">
+								21"
+							</td>
+							<td class="pri-5" data-column="Weight">
+								15 lbs
+							</td>
+							<td class="pri-4" data-column="BoatName">
+								FV-tuna.com
+							</td>
+							<td class="pri-1" data-column="CrewCount">
+								2
+							</td>
+							<td class="pri-1" data-column="Date">
+								6/12/2016
+							</td>
+							<td class="pri-3" data-column="Coordinates">
+								32.127, -128.400               
+							</td>
+							<td class="pri-1" data-column="CatchClock">
+								0:38
+							</td>
+						</tr>
+						<tr>
+							<td class=" mobile-show">
+								Marlin
+							</td>
+							<td class="mobile-show pri-6" data-column="Size">
+								85"
+							</td>
+							<td class="pri-5" data-column="Weight">
+								425 lbs
+							</td>
+							<td class="pri-4" data-column="BoatName">
+								Hard Merchandise
+							</td>
+							<td class="pri-1" data-column="CrewCount">
+								2
+							</td>
+							<td class="pri-1" data-column="Date">
+								6/08/2016
+							</td>
+							<td class="pri-3" data-column="Coordinates">
+								34.127, -119.001                
+							</td>
+							<td class="pri-1" data-column="CatchClock">
+								10:21
+							</td>
+						</tr>
+						<tr>
+							<td class=" mobile-show">
+								Sailfish
+							</td>
+							<td class="mobile-show pri-6" data-column="Size">
+								99"
+							</td>
+							<td class="pri-5" data-column="Weight">
+								500 lbs
+							</td>
+							<td class="pri-4" data-column="BoatName">
+								Fishing Frenzy
+							</td>
+							<td class="pri-1" data-column="CrewCount">
+								3
+							</td>
+							<td class="pri-1" data-column="Date">
+								6/21/2016
+							</td>
+							<td class="pri-3" data-column="Coordinates">
+								28.057, -141.601                
+							</td>
+							<td class="pri-1" data-column="CatchClock">
+								5:31
+							</td>
+						</tr>
+						
+					</tbody>
+				</table>
+
+            </div> <!-- #main -->
+        </div> <!-- #main-container -->
+
+        <div class="footer-container">
+            <footer class="wrapper">
+            </footer>
+        </div>
+
+        <script src="js/vendor/jquery-1.11.2.min.js"></script>
+		<script src="js/libs/enquire.min.js"></script>
+		<script src="js/libs/matchMedia.js"></script>
+		<script src="js/libs/jquery.reveal.js"></script>
+		<script src="js/responsive-table.js"></script>
+		<script>
+			$('#table').responsivize({modal: false});
+		</script>
+    </body>
+</html>
