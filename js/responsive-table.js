@@ -7,7 +7,7 @@
  * 800 - 1000: 5 columns
  * 1000 +: all columns
  * 
- * Requirements: matchmedia polyfill if supporting IE < 10 or old webkits, jquery.reveal.js for modal
+ * Requirements: matchmedia polyfill if supporting IE < 10 or old webkits
  */
 
 (function ($) {
@@ -60,7 +60,7 @@
 		var $rspListToggle = $('<button id="rspListToggle" type="button" class="toggle">More</button>')
 		$rspMenu.append($rspListToggle);
 		
-		var $rspList = $('<ul id="rspList" />');
+		var $rspList = $('<ul id="rspList" class="hidden" />');
 		
 		$rspTable.find('th').each(function(index){
 			var $btn = $('<button type="button" />'),
@@ -129,21 +129,19 @@
         });
 
         if (settings.modal) {
-            // build modal
-            var $rspModal = $('<div id="rspModal" class="reveal-modal rsp-table-modal">');
-            $rspModal.html('<div class="modal-header"><a class="close-reveal-modal">&#215;</a></div>');
-            $rspModal.append($('<div class="modal-body">').append($rspList.removeClass('hidden')));
-
-            $('body').append($rspModal);
+            
+            var modal = new rspModal($rspList.removeClass('hidden'));
+            modal.init();
 
             $rspListToggle.on('click', function () {
-                $('#rspModal').reveal({ animation: 'none' });
+                modal.show();
             });
+
 
             $('#rspList button').on('click', function () {
                 var target = $(this).data('target');
 
-                $('#rspModal').trigger('reveal:close');
+                modal.hide();
 
                 updateUI(target);
             });
@@ -337,5 +335,51 @@
 
         return $updatedHtml.html();
     };
+    
+    // We're building a modal!
+    // @param content a string of html to inject in the modal.
+    var rspModal = function (content) {
+        
+        var $modalBackdrop = $('<div class="rsp-modal-backdrop" />');
+        // accessibility is not a thing in this world
+        var modalTemplate = '<div id="rspModal" class="rsp-table-modal">' + 
+                                '<div class="modal-header">' +
+                                    '<button class="close">&#215;</button>' +
+                                '</div>' +
+                                '<div class="modal-body"></div>' +
+                            '</div>';
+        var $modal = $(modalTemplate);
+        
+        var modal = {
+            init: function () {
+                
+                $modalBackdrop.on('click', function () {                    
+                    modal.hide();
+                });
+                
+                $modalBackdrop.hide();
+                $('body').append($modalBackdrop);
+        
+                $modal.find('.close').on('click', function() {
+                    modal.hide();
+                });
+                $modal.find('.modal-body').html(content);                
+                $modal.hide();
+                
+                $('body').append($modal);
+            },
+            show: function (){
+                $modalBackdrop.show();
+                $modal.show();
+            },
+            hide: function () {
+                $modalBackdrop.hide(); 
+                $modal.hide();
+            }
+        };
+        
+        return modal;
+    };
+    
 
 })(jQuery);

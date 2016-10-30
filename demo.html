@@ -9,7 +9,6 @@
 
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
-		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/responsivize.css">
 
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
@@ -35,13 +34,13 @@
 					</code>
 					<h3>Options:</h3>
 					<dl>
-						<dt>highlightSortedColumn</dt>
+						<dt>highlightSortedColumn { boolean }</dt>
 						<dd>default: false</dd>
 						<dd>set a background color on the currently sorted column</dd>
 						
-						<dt>modal</dt>
+						<dt>modal { boolean }</dt>
 						<dd>default: true</dd>
-						<dd>display the column selector in a modal or dropdown</dd>
+						<dd>display the column selector in a modal or dropdown. Can be convenient for progressive enhancement, e.g. touch events vs no touch events.</dd>
 						
 						<dt>columnPriority</dt>
 						<dd>default: TODO (it's complicated)
@@ -322,10 +321,9 @@
 
         <script src="js/vendor/jquery-1.11.2.min.js"></script>
 		<script src="js/libs/matchMedia.js"></script>
-		<script src="js/libs/jquery.reveal.js"></script>
 		<script src="js/responsive-table.js"></script>
 		<script>
-			$('#table').responsivize({modal: false});
+			$('#table').responsivize({});
 		</script>
     </body>
 </html>

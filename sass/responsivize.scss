@@ -126,30 +126,6 @@ $base-font-size:16px;
 }
 
 
-.reveal-modal {
-    box-shadow:none;
-    top: 2em;
-	
-    @media screen and (min-width:$break-fivecolumn) {
-        top:4em;
-    }
-
-    .modal-header {
-        background:none;
-        border-bottom:none;
-        padding:0;
-    }
-
-    .close-reveal-modal {
-		color: $accent;
-        font-size:40px;
-        font-weight:normal;
-        right:10px;
-        top:14px;
-    }
-}
-
-
 .rsp-table-menu,
 .rsp-table-modal {
     ul {
@@ -272,13 +248,66 @@ $base-font-size:16px;
     }
 } // end .rsp-table-menu
 
+
+.rsp-modal-backdrop {
+    background: rgba(0,0,0,.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: 100%;
+}
+
 .rsp-table-modal {
-    .modal-body {
-        padding:1em;
+    $margin: 2em; // top margin for the modal
+    $padding: 3em; // base padding for modal-body
+
+    background: #fff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    max-height: 90%;
+    max-height: calc(100% - #{$margin * 2});
+    width: 80%;
+    max-width: 480px;
+    
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: $margin;
+    margin: auto;
+    
+    @media screen and (min-width: $break-tablet) {
+        top: 2 * $margin;
+    }
+    
+    .modal-header {
+        background:none;
+        border-bottom:none;
+        padding:0;
     }
 
+    .close {
+        border: none;
+        background: transparent;
+		color: $accent;
+        font-size:40px;
+        font-weight:normal;
+        
+        position: absolute;
+        right:10px;
+        top:0;
+    }
+    
+    .modal-body {
+        overflow: hidden;
+        padding: $padding $padding - 1;
+    }
+    
     ul {
-        padding-top:1.5em;
+        max-height: 90%;
+        max-height: calc(100vh - #{($padding + $margin) * 2});
+        overflow: auto;
+        padding: 0 1em; // make room for scrollbar if content gets too long
     }
 
     li {
