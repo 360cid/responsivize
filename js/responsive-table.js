@@ -190,7 +190,11 @@
             }
 
             // Update table layout on screen resize
-            $window.on('resize', onResize(sort));
+            // TODO: this assumes sorting happens server-side. If client-side sorting is
+            // allowed, we'll need to pass the sort param in
+            $window.on('resize', function() {
+                onResize();
+            });
             
             onResize(sort);
         });
